@@ -49,6 +49,8 @@ public fun HsvColorPicker(
   drawOnPosSelected: (DrawScope.() -> Unit)? = null,
   drawDefaultWheelIndicator: Boolean = wheelImageBitmap == null && drawOnPosSelected == null,
   onColorChanged: (colorEnvelope: ColorEnvelope) -> Unit = {},
+  onStart: () -> Unit = {},
+  onFinish: () -> Unit = {},
   initialColor: Color? = null,
 ) {
   var size by remember { mutableStateOf(IntSize.Zero) }
@@ -62,6 +64,8 @@ public fun HsvColorPicker(
     drawOnPosSelected = drawOnPosSelected,
     drawDefaultWheelIndicator = drawDefaultWheelIndicator,
     onColorChanged = onColorChanged,
+    onStart = onStart,
+    onFinish = onFinish,
     sizeChanged = {
       size = it
       radius = size.radius
