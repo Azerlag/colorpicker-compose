@@ -58,6 +58,8 @@ internal fun ColorPicker(
   drawOnPosSelected: (DrawScope.() -> Unit)? = null,
   drawDefaultWheelIndicator: Boolean = wheelImageBitmap == null && drawOnPosSelected == null,
   onColorChanged: (colorEnvelope: ColorEnvelope) -> Unit = {},
+  onStart: () -> Unit = {},
+  onFinish: () -> Unit = {},
   sizeChanged: (IntSize) -> Unit = { _ -> },
   setup: ColorPickerController.() -> Unit,
   draw: Canvas.(size: Size) -> Unit,
@@ -87,16 +89,25 @@ internal fun ColorPicker(
           }
         }
       }
-      .pointerInput(Unit) {
-        detectTapGestures { offset ->
-          controller.selectByCoordinate(offset, true)
+    .pointerInput(Unit) {
+        detectTapGestures(
+            onPress = { offset ->
+                onStart()
+                controller.selectByCoordinate(offset, true)
+                tryAwaitRelease()
+                onFinish()
+            }
+        )
+    }
+    .pointerInput(Unit) {
+        detectDragGestures(
+            onDragStart = { onStart() },
+            onDragEnd = { onFinish() },
+            onDragCancel = { onFinish() },
+        ) { change, _ ->
+            controller.selectByCoordinate(change.position, true)
         }
-      }
-      .pointerInput(Unit) {
-        detectDragGestures { change, _ ->
-          controller.selectByCoordinate(change.position, true)
-        }
-      },
+    },
   ) {
     drawIntoCanvas { canvas ->
       // draw bitmap on the canvas.
