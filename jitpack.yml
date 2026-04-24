@@ -1,2 +1,8 @@
 jdk:
   - openjdk17
+
+before_install:
+  - echo "org.gradle.configureondemand=false" >> gradle.properties
+
+install:
+  - ./gradlew :colorpicker-compose:publishToMavenLocal -x :kotlinWasmToolingSetup -x :kotlinNodeJsSetup -x :kotlinWasmYarnSetup
