@@ -5,7 +5,7 @@ package com.github.skydoves.colorpicker.compose
  * Allows consumers to react differently based on interaction type.
  * Part of [ColorEnvelope], it occurs in: [Slider] [ColorPicker]
  */
-enum class ColorChangeSource {
+public enum class ColorChangeSource {
 
     /** Discrete tap gesture → final selection. */
     Tap,
