@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.dp
  * @param tileEvenColor Color of the even tiles.
  * @param tileSize DP size of tiles.
  * @param initialColor [Color] of the initial state. This property works for [HsvColorPicker] and
+ * @param onStart Callback invoked when user interaction with the slider starts.
+ * @param onFinish Callback invoked when user interaction with the slider ends.
  * it will be selected on rightmost of slider if you give null value.
  */
 @Composable
@@ -62,6 +64,8 @@ public fun AlphaSlider(
   tileEvenColor: Color = defaultTileEvenColor,
   tileSize: Dp = 12.dp,
   initialColor: Color? = null,
+  onStart: () -> Unit = {},
+  onFinish: () -> Unit = {},
 ) {
   val density = LocalDensity.current
   val paint = alphaTilePaint(
@@ -91,6 +95,8 @@ public fun AlphaSlider(
     },
     getValue = { alpha.value },
     setValue = ColorPickerController::setAlpha,
+    onStart = onStart,
+    onFinish = onFinish,
     computeInitial = { it.alpha },
     getGradientColors = {
       val color = pureSelectedColor.value

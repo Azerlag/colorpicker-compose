@@ -24,10 +24,12 @@ import androidx.compose.ui.graphics.Color
  * @param color ARGB color value.
  * @param hexCode Color hex code, which represents [color] value.
  * @param fromUser Represents this event is triggered by user or not.
+ * @param source Represents type of event.
  */
 @Immutable
 public data class ColorEnvelope(
   val color: Color,
   val hexCode: String,
   val fromUser: Boolean,
+  val source: ColorChangeSource = ColorChangeSource.Programmatic,
 )

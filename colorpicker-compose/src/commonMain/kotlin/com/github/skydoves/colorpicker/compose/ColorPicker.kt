@@ -91,11 +91,12 @@ internal fun ColorPicker(
       }
     .pointerInput(Unit) {
         detectTapGestures(
-            onPress = { offset ->
-                onStart()
-                controller.selectByCoordinate(offset, true)
-                tryAwaitRelease()
-                onFinish()
+            onTap = { offset ->
+                controller.selectByCoordinate(
+                    point = offset,
+                    fromUser = true,
+                    source = ColorChangeSource.Tap
+                )
             }
         )
     }
@@ -105,7 +106,11 @@ internal fun ColorPicker(
             onDragEnd = { onFinish() },
             onDragCancel = { onFinish() },
         ) { change, _ ->
-            controller.selectByCoordinate(change.position, true)
+            controller.selectByCoordinate(
+                point = change.position,
+                fromUser = true,
+                source = ColorChangeSource.Drag
+            )
         }
     },
   ) {
