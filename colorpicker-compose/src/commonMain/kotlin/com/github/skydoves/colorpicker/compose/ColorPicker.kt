@@ -89,30 +89,30 @@ internal fun ColorPicker(
           }
         }
       }
-    .pointerInput(Unit) {
+      .pointerInput(Unit) {
         detectTapGestures(
-            onTap = { offset ->
-                controller.selectByCoordinate(
-                    point = offset,
-                    fromUser = true,
-                    source = ColorChangeSource.Tap
-                )
-            }
-        )
-    }
-    .pointerInput(Unit) {
-        detectDragGestures(
-            onDragStart = { onStart() },
-            onDragEnd = { onFinish() },
-            onDragCancel = { onFinish() },
-        ) { change, _ ->
+          onTap = { offset ->
             controller.selectByCoordinate(
-                point = change.position,
-                fromUser = true,
-                source = ColorChangeSource.Drag
+              point = offset,
+              fromUser = true,
+              source = ColorChangeSource.Tap,
             )
+          },
+        )
+      }
+      .pointerInput(Unit) {
+        detectDragGestures(
+          onDragStart = { onStart() },
+          onDragEnd = { onFinish() },
+          onDragCancel = { onFinish() },
+        ) { change, _ ->
+          controller.selectByCoordinate(
+            point = change.position,
+            fromUser = true,
+            source = ColorChangeSource.Drag,
+          )
         }
-    },
+      },
   ) {
     drawIntoCanvas { canvas ->
       // draw bitmap on the canvas.

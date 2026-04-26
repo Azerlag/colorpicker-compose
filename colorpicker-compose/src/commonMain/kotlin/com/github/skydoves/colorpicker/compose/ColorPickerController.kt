@@ -17,7 +17,6 @@
 
 package com.github.skydoves.colorpicker.compose
 
-import android.util.Log.v
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
@@ -163,7 +162,6 @@ constructor(
   /** Whether a SaturationSlider is attached. */
   internal var isAttachedSaturationSlider: Boolean = false
 
-
   internal var reviseTick = mutableIntStateOf(0)
 
   private var _colorFlow = MutableStateFlow<ColorEnvelope?>(null)
@@ -209,7 +207,11 @@ constructor(
    * @param point coordinate to extract a pixel color.
    * @param fromUser Represents this event is triggered by user or not.
    */
-  public fun selectByCoordinate(point: Offset, fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  public fun selectByCoordinate(
+    point: Offset,
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     if (selectByCoordinate(point)) {
       // notify color changes to the listeners.
       notifyColorChanged(fromUser, source)
@@ -266,35 +268,54 @@ constructor(
   }
 
   /** Combine the alpha value to the selected pure color. */
-  public fun setAlpha(alpha: Float, fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  public fun setAlpha(
+    alpha: Float,
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     if (setAlpha(alpha)) {
       notifyColorChanged(fromUser, source)
     }
   }
 
   /** Combine the hue value to the selected pure color. */
-  public fun setHue(hue: Float, fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  public fun setHue(
+    hue: Float,
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     if (setHue(hue)) {
       notifyColorChanged(fromUser, source)
     }
   }
 
   /** Combine the brightness value to the selected pure color. */
-  public fun setBrightness(brightness: Float, fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  public fun setBrightness(
+    brightness: Float,
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     if (setBrightness(brightness)) {
       notifyColorChanged(fromUser, source)
     }
   }
 
   /** Combine the saturation value to the selected pure color. */
-  public fun setSaturation(saturation: Float, fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  public fun setSaturation(
+    saturation: Float,
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     if (setSaturation(saturation)) {
       notifyColorChanged(fromUser, source)
     }
   }
 
   /** Notify color changes to the color picker and other subcomponents. */
-  private fun notifyColorChanged(fromUser: Boolean, source: ColorChangeSource = ColorChangeSource.Programmatic) {
+  private fun notifyColorChanged(
+    fromUser: Boolean,
+    source: ColorChangeSource = ColorChangeSource.Programmatic,
+  ) {
     val color = _selectedColor.value
     _colorFlow.value = ColorEnvelope(color, color.hexCode, fromUser, source)
   }
@@ -350,14 +371,14 @@ constructor(
   }
 
   private fun setSaturation(saturation: Float): Boolean {
-      if (!enabled || this.saturation.value == saturation) {
-        return false
-      }
-      this.saturation.value = saturation
-      val (h, _, v) = pureSelectedColor.value.toHSV()
-      val actualV = if (isAttachedBrightnessSlider) brightness.value else v
-      _selectedColor.value = Color.hsv(h, saturation, actualV, alpha.value)
-      return true
+    if (!enabled || this.saturation.value == saturation) {
+      return false
+    }
+    this.saturation.value = saturation
+    val (h, _, v) = pureSelectedColor.value.toHSV()
+    val actualV = if (isAttachedBrightnessSlider) brightness.value else v
+    _selectedColor.value = Color.hsv(h, saturation, actualV, alpha.value)
+    return true
   }
 
   /** Return a [Color] that is applied with HSV color factors to the [color]. */

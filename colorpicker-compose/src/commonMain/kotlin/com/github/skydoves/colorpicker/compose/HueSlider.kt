@@ -44,52 +44,52 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 public fun HueSlider(
-    modifier: Modifier = Modifier,
-    controller: ColorPickerController,
-    borderRadius: Dp = 6.dp,
-    borderSize: Dp = 5.dp,
-    borderColor: Color = Color.LightGray,
-    wheelImageBitmap: ImageBitmap? = null,
-    wheelRadius: Dp = 12.dp,
-    wheelColor: Color = Color.White,
-    wheelAlpha: Float = 1.0f,
-    wheelPaint: Paint = Paint().apply {
-        color = wheelColor
-        alpha = wheelAlpha
-    },
-    initialColor: Color? = null,
-    onColorChanged: (ColorChangeSource, Float) -> Unit = { _, _ -> },
-    onStart: () -> Unit = {},
-    onFinish: () -> Unit = {},
+  modifier: Modifier = Modifier,
+  controller: ColorPickerController,
+  borderRadius: Dp = 6.dp,
+  borderSize: Dp = 5.dp,
+  borderColor: Color = Color.LightGray,
+  wheelImageBitmap: ImageBitmap? = null,
+  wheelRadius: Dp = 12.dp,
+  wheelColor: Color = Color.White,
+  wheelAlpha: Float = 1.0f,
+  wheelPaint: Paint = Paint().apply {
+    color = wheelColor
+    alpha = wheelAlpha
+  },
+  initialColor: Color? = null,
+  onColorChanged: (ColorChangeSource, Float) -> Unit = { _, _ -> },
+  onStart: () -> Unit = {},
+  onFinish: () -> Unit = {},
 ) {
-    Slider(
-        modifier = modifier,
-        controller = controller,
-        borderRadius = borderRadius,
-        borderSize = borderSize,
-        borderColor = borderColor,
-        wheelImageBitmap = wheelImageBitmap,
-        wheelRadius = wheelRadius,
-        wheelColor = wheelColor,
-        wheelAlpha = wheelAlpha,
-        wheelPaint = wheelPaint,
-        initialColor = initialColor,
-        getValue = { pureSelectedColor.value.toHSV().first / 360f },
-        setValue = ColorPickerController::setHue,
-        onColorChanged = onColorChanged,
-        onStart = onStart,
-        onFinish = onFinish,
-        computeInitial = { it.toHSV().first / 360f },
-        getGradientColors = {
-            listOf(
-                Color.Red,
-                Color.Yellow,
-                Color.Green,
-                Color.Cyan,
-                Color.Blue,
-                Color.Magenta,
-                Color.Red,
-            )
-        },
-    )
+  Slider(
+    modifier = modifier,
+    controller = controller,
+    borderRadius = borderRadius,
+    borderSize = borderSize,
+    borderColor = borderColor,
+    wheelImageBitmap = wheelImageBitmap,
+    wheelRadius = wheelRadius,
+    wheelColor = wheelColor,
+    wheelAlpha = wheelAlpha,
+    wheelPaint = wheelPaint,
+    initialColor = initialColor,
+    getValue = { pureSelectedColor.value.toHSV().first / 360f },
+    setValue = ColorPickerController::setHue,
+    onColorChanged = onColorChanged,
+    onStart = onStart,
+    onFinish = onFinish,
+    computeInitial = { it.toHSV().first / 360f },
+    getGradientColors = {
+      listOf(
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Cyan,
+        Color.Blue,
+        Color.Magenta,
+        Color.Red,
+      )
+    },
+  )
 }

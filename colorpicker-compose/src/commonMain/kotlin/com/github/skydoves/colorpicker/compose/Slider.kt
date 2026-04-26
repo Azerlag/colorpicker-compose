@@ -126,22 +126,22 @@ internal fun Slider(
           }
         }
       }
-    .pointerInput(Unit) {
+      .pointerInput(Unit) {
         detectTapGestures(
-            onTap = { offset ->
-                setValue(offset.x, ColorChangeSource.Tap)
-            }
+          onTap = { offset ->
+            setValue(offset.x, ColorChangeSource.Tap)
+          },
         )
-    }
-    .pointerInput(Unit) {
+      }
+      .pointerInput(Unit) {
         detectHorizontalDragGestures(
-            onDragStart = { onStart() },
-            onDragEnd = { onFinish() },
-            onDragCancel = { onFinish() }
+          onDragStart = { onStart() },
+          onDragEnd = { onFinish() },
+          onDragCancel = { onFinish() },
         ) { change, _ ->
-            setValue(change.position.x, ColorChangeSource.Drag)
+          setValue(change.position.x, ColorChangeSource.Drag)
         }
-    },
+      },
   ) {
     drawIntoCanvas { canvas ->
       background?.let {

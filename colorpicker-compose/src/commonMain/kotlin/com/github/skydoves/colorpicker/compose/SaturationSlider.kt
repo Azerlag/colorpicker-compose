@@ -1,3 +1,18 @@
+/*
+ * Designed and developed by 2022 skydoves (Jaewoong Eum)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.skydoves.colorpicker.compose
 
 import androidx.compose.runtime.Composable
@@ -28,52 +43,52 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 public fun SaturationSlider(
-    modifier: Modifier = Modifier,
-    controller: ColorPickerController,
-    borderRadius: Dp = 6.dp,
-    borderSize: Dp = 5.dp,
-    borderColor: Color = Color.LightGray,
-    wheelImageBitmap: ImageBitmap? = null,
-    wheelRadius: Dp = 12.dp,
-    wheelColor: Color = Color.White,
-    wheelAlpha: Float = 1.0f,
-    wheelPaint: Paint = Paint().apply {
-        color = wheelColor
-        alpha = wheelAlpha
-    },
-    initialColor: Color? = null,
-    onStart: () -> Unit = {},
-    onFinish: () -> Unit = {},
+  modifier: Modifier = Modifier,
+  controller: ColorPickerController,
+  borderRadius: Dp = 6.dp,
+  borderSize: Dp = 5.dp,
+  borderColor: Color = Color.LightGray,
+  wheelImageBitmap: ImageBitmap? = null,
+  wheelRadius: Dp = 12.dp,
+  wheelColor: Color = Color.White,
+  wheelAlpha: Float = 1.0f,
+  wheelPaint: Paint = Paint().apply {
+    color = wheelColor
+    alpha = wheelAlpha
+  },
+  initialColor: Color? = null,
+  onStart: () -> Unit = {},
+  onFinish: () -> Unit = {},
 ) {
-    SideEffect {
-        controller.isAttachedSaturationSlider = true
-    }
+  SideEffect {
+    controller.isAttachedSaturationSlider = true
+  }
 
-    Slider(
-        modifier = modifier,
-        controller = controller,
-        borderRadius = borderRadius,
-        borderSize = borderSize,
-        borderColor = borderColor,
-        wheelImageBitmap = wheelImageBitmap,
-        wheelRadius = wheelRadius,
-        wheelColor = wheelColor,
-        wheelAlpha = wheelAlpha,
-        wheelPaint = wheelPaint,
-        initialColor = initialColor,
-        drawBackground = {},
-        getValue = { saturation.value },
-        setValue = ColorPickerController::setSaturation,
-        onStart = onStart,
-        onFinish = onFinish,
-        computeInitial = { it.toHSV().second },
-        getGradientColors = {
-            val h = pureSelectedColor.value.toHSV().first
-            val v = controller.brightness.value
-            listOf(
-                Color.hsv(h, 0f, v),
-                Color.hsv(h, 1f, v),
-            )
-        },
-    )
+  Slider(
+    modifier = modifier,
+    controller = controller,
+    borderRadius = borderRadius,
+    borderSize = borderSize,
+    borderColor = borderColor,
+    wheelImageBitmap = wheelImageBitmap,
+    wheelRadius = wheelRadius,
+    wheelColor = wheelColor,
+    wheelAlpha = wheelAlpha,
+    wheelPaint = wheelPaint,
+    initialColor = initialColor,
+    drawBackground = {},
+    getValue = { saturation.value },
+    setValue = ColorPickerController::setSaturation,
+    onStart = onStart,
+    onFinish = onFinish,
+    computeInitial = { it.toHSV().second },
+    getGradientColors = {
+      val h = pureSelectedColor.value.toHSV().first
+      val v = controller.brightness.value
+      listOf(
+        Color.hsv(h, 0f, v),
+        Color.hsv(h, 1f, v),
+      )
+    },
+  )
 }
