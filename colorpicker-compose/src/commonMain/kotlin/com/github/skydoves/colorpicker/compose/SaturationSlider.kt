@@ -15,6 +15,7 @@
  */
 package com.github.skydoves.colorpicker.compose
 
+import android.util.Log.v
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
@@ -84,7 +85,7 @@ public fun SaturationSlider(
     computeInitial = { it.toHSV().second },
     getGradientColors = {
       val h = pureSelectedColor.value.toHSV().first
-      val v = controller.brightness.value
+      val v = if (controller.isAttachedBrightnessSlider) brightness.value else 1f
       listOf(
         Color.hsv(h, 0f, v),
         Color.hsv(h, 1f, v),
