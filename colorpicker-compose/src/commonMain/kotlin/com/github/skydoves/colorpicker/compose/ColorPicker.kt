@@ -68,12 +68,15 @@ internal fun ColorPicker(
 
   val debounceDuration = controller.debounceDuration
   DisposableEffect(key1 = controller, key2 = debounceDuration) {
-    controller.coroutineScope.launch(Dispatchers.Main) {
+    val job = controller.coroutineScope.launch(Dispatchers.Main) {
       controller.getColorFlow(debounceDuration ?: 0).collect {
         onColorChanged(it)
       }
     }
-    onDispose { controller.releaseBitmap() }
+    onDispose {
+      job.cancel()
+      controller.releaseBitmap()
+    }
   }
 
   Canvas(
@@ -100,7 +103,7 @@ internal fun ColorPicker(
           },
         )
       }
-      .pointerInput(Unit) {
+      .pointerInput(key1 = controller, key2 = debounceDuration) {
         detectDragGestures(
           onDragStart = { onStart() },
           onDragEnd = { onFinish() },

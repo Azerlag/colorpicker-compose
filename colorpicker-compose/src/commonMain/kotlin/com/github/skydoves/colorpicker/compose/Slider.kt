@@ -95,6 +95,7 @@ internal fun Slider(
   getGradientColors: ColorPickerController.() -> List<Color>,
 ) {
   val density = LocalDensity.current
+  val debounceDuration = controller.debounceDuration
   var background: ImageBitmap? = null
   val borderPaint = Paint().apply {
     style = PaintingStyle.Stroke
@@ -133,7 +134,7 @@ internal fun Slider(
           },
         )
       }
-      .pointerInput(Unit) {
+      .pointerInput(key1 = controller, key2 = debounceDuration) {
         detectHorizontalDragGestures(
           onDragStart = { onStart() },
           onDragEnd = { onFinish() },
